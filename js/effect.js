@@ -106,7 +106,7 @@
             first2=0;
             clearInterval(ani_bg);
             $('#ani').removeClass();
-            left=-200;
+            left=-200;  bo=0;
             a_top = Math.floor((Math.random() * 200) + 50);
             $('#ani').css({'background-position': '0 0','top': top+'px', 'left': left+'px'});
 
