@@ -32,7 +32,7 @@
 
         if($('#ani').hasClass('bomb')===true){
           
-          if (bo<=0 && bo>= -1600) {
+          if (bo<=0 && bo>= -3000) {
             bo-=200;
             $('#ani').css({'background-position': bo+'px 0','top':b_top+'px', 'left':n_left+'px'});
           }
@@ -99,7 +99,7 @@
 
           
 
-          if(height  >= top2-100 && height  <= top2 + 400) {
+          if(height  >= top2-150 && height  <= top2 + 400) {
             first_chk2 ();
           }
           else{
@@ -134,8 +134,8 @@
       function color(){        
         h1+=3; 
         h2+=3;
-        deg+=0.5;        
-        $('#rd_text').css('background-image', 'linear-gradient('+deg+'deg, hsl(' + h1 + ', 72%, 50%), hsl(' + h2 + ', 52%, 90%) 60% )');
+        // deg+=0.5;        
+        $('#rd_text').css('background-image', 'linear-gradient(40deg, hsl(' + h1 + ', 72%, 50%), hsl(' + h2 + ', 52%, 90%) 60% )');
       }
 
      
