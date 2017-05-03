@@ -1,216 +1,85 @@
-<!DOCTYPE html>
-<!-- This site was created in Webflow. http://www.webflow.com-->
-<!-- Last Published: Tue Jul 01 2014 15:15:42 GMT+0000 (UTC) -->
-<html data-wf-site="53b2d052fc6ea3a2638d3884">
+<!DOCTYPE html(lang='en')>
 <head>
-  <meta charset="utf-8">
-  <title>Chester Kuo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Webflow">
-
-  <link rel="stylesheet" type="text/css" href="css/normalize.css">
-  <link rel="stylesheet" type="text/css" href="css/webflow.css">
-  <link rel="stylesheet" type="text/css" href="css/chidien.webflow.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-  <script>
-    WebFont.load({
-      google: {
-        families: ["Open Sans:300,300italic,400,400italic,600,600italic,700,700italic,800,800italic"]
-      }
-    });
-  </script>
-
-  <script type="text/javascript" src="js/modernizr.js"></script>
-
-  <link rel="shortcut icon" type="image/x-icon" href="images/Favicon.png">  
+  <title>three.js webgl - effects - anaglyph</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+  <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
-
 <body>
-  <div class="w-nav navbar" id="top" data-collapse="medium" data-animation="default" data-duration="400" data-contain="1">
-    <div class="w-container"><a class="w-nav-brand logo-container" href="index.html"><h1>Watch me!</h1></a>
-      <nav class="w-nav-menu nav-menu-container" role="navigation">
-        <a class="w-nav-link nav-link" href="#about-me-intro">About</a>
-        <a class="w-nav-link nav-link" href="#intro">What I Do</a>       
-        <a class="w-nav-link nav-link" href="#content-menu">My Work</a>
-        <a class="w-nav-link nav-link" href="#contact">Contact</a>       
-      </nav>
-
-      <!-- menu buttom for pad & mobile -->
-      <div class="w-nav-button top-menu-button">
-        <div class="w-icon-nav-menu top-menu-icon"></div>
-      </div>
-
-    </div>
+  <div id="title">
+    <h1>CHESTER</h1>
   </div>
-
- 
-
-  <div class="section intro-image" id="about-me-intro"></div>
-  <div class="section about-me">
-    <img class="profile-image" src="images/p2.jpg" alt="53105d22c5b3f69d14000636_Profile-1.jpg">
-    <div class="w-container">
-      <h3 class="h3-small intro">HEY!</h3>
-      <h3 class="h3-name">I'm Chester</h3>
-      <h3 class="h3-small">A FRONT-END WEB DEVELOPER</h3>
-      
-      <a class="w-inline-block menu-button godown" href="#intro">
-        <img src="images/Icon-arrowtop.png" alt="">
-      </a>
-           
-    </div>
-  </div>
-
-  <!-- intro -->
-  <div class="section intro" id="intro">
-    <div class="w-container">
-      <h3 class="h3-small intro">what i can do</h3>
-      <div class="w-row">
-        <div class="w-col w-col-3 w-col-small-6 top-info-column">
-          <img class="image-top" src="images/html01.jpg" alt="">
-          <div class="hov">
-            <h2>H<span>TML5</span></h2>
-          </div> 
-        </div>
-        <div class="w-col w-col-3 w-col-small-6 top-info-column">
-          <img class="image-top" src="images/css02.jpg" alt="">
-          <div class="hov">
-            <h2>C<span>SS3</span></h2>
-          </div>
-        </div>
-        <div class="w-col w-col-3 w-col-small-6 top-info-column">
-          <img class="image-top" src="images/js01.jpg" alt="">
-          <div class="hov">
-            <h2>J<span>avaScript</span></h2>
-          </div>
-        </div>
-        <div class="w-col w-col-3 w-col-small-6 top-info-column">
-          <img class="image-top" src="images/css01.jpg" alt="">
-          <div class="hov">
-            <h2>D<span>esign</span></h2>
-          </div>
-        </div>
-        <a class="link top-info" href="#content-menu">Check out more</a>
-      </div>
-    </div>
-  </div>
-  <!-- end intro -->  
-
-  <div class="section content-menu" id="content-menu">
-    <h4 class="discover-more-title">Discover my work:</h4>
-    <a class="link content-menu-link" href="#impression">Slider</a>
-    <a class="link content-menu-link" href="#little">Little works</a>
-    <a class="link content-menu-link" href="#website">Websites</a>
-    <a class="link content-menu-link" href="#contact">Discover more</a>
-
-  </div>  
-
-  <!-- slider -->
- <div class="section content-slider">
-    <div class="w-slider content-slider" id="impression" data-animation="cross" data-duration="999" data-infinite="1" data-easing="ease-in-out-quad" data-delay="3000" data-autoplay="1">
-      <div class="w-slider-mask">
-        <div class="w-slide content-slider-slide">
-          <div class="w-container content-slider-container">
-            <h2 class="slider-title small">I'm ready to work as a</h2>
-            <h2 class="slider-title _2">Web Developer</h2>            
-          </div>
-        </div>
-        <div class="w-slide content-slider-slide _2">
-          <div class="w-container content-slider-container">
-            <h2 class="slider-title small">MAYBE I CAN WORK AS A</h2>
-            <h2 class="slider-title _2">Photographer</h2>           
-          </div>
-        </div>
-        <div class="w-slide content-slider-slide _3">
-          <div class="w-container content-slider-container">
-            <h2 class="slider-title small">MAYBE I CAN WORK AS A</h2>
-            <h2 class="slider-title _2">Web Designer</h2>           
-          </div>
-        </div>
-      </div>
-
-      <div class="w-slider-arrow-left">
-        <!-- <div class="w-icon-slider-left w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny"></div> -->
-        <div class="w-icon-slider-left w-hidden-tiny slider-arrow-icon"></div>
-      </div>
-      <div class="w-slider-arrow-right">
-       <!--  <div class="w-icon-slider-right w-hidden-main w-hidden-medium w-hidden-small w-hidden-tiny"></div> -->
-        <div class="w-icon-slider-right w-hidden-tiny slider-arrow-icon"></div>
-        
-      </div>
-      <div class="w-slider-nav w-round content-slider-nav"></div>
-    </div>
-  </div>
-  <!-- end slider -->
-  
-  <div class="section little" id="little">
-    <div class="random_bg">
-      <h2 id="rd_text">RANDOM<br/> GRADIENT<br/> TEXT</h2>      
-    </div>
-    <div class="area" id="animation">
-      <h2> ANIMATION!</h2>
-      <p>WAIT AND CLICK</p>
-      <div class="" id="ani"></div> 
-    </div>
-           
-  </div>
-
-  <div class="section website" id="website">
-    <div class="w-container">
-      <h3 class="h3-small intro">what i have done</h3>
-      <div class="w-row">
-
-        <div class="w-col w-col-6 w-col-small-6 sample"><a target="_blank" href="https://dl.dropboxusercontent.com/u/19865730/banana_f/index.htm">
-          <img class="image-top" src="images/banana.jpg" alt="">
-          <div class="hov">
-            <h3 class="h3-project">Banana Cafe</h3>
-            <p>HTML5 | CSS3 | JS | SVG</p>
-          </div>
-        </a></div>
-        
-        <div class="w-col w-col-6 w-col-small-6 sample"><a target="_blank" href="http://chicchoc.com.tw/ch/index.aspx">
-          <img class="image-top" src="images/chiccho.jpg" alt="">
-          <div class="hov">
-            <h3 class="h3-project">CHIC CHOC</h3>
-            <p>HTML5 | CSS3 | JS </p>
-          </div>
-        </a></div>
-
-        <div class="w-col w-col-6 w-col-small-6 sample"><a target="_blank" href="web3/index.html">
-          <img class="image-top" src="images/tf.jpg" alt="">
-          <div class="hov">
-            <h3 class="h3-project">True Friend Inn</h3>
-            <p>HTML5 | CSS3 | JS </p>
-          </div>
-        </a></div>
-
-
-      </div>
-    </div>
+  <svg class="svg-filters" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="filter">
+        <feturbulence type="fractalNoise" basefrequency="0 0.5" numoctaves="1" result="wrap"></feturbulence>
+        <fedisplacementmap xchannelselector="R" ychannelselector="G" scale="30" in="SourceGraphic" in2="wrap"></fedisplacementmap>
+      </filter>
+    </defs>
+    <defs>
+      <filter id="glitch" x="0" y="0">
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="r"></fecolormatrix>
+        <feoffset in="r" result="r" dx="-0.820318">
+          <animate attributename="dx" attributetype="XML" values="0; -5; 0; -18; -2; -4; 0;-3; 0" dur="0.2s" repeatcount="indefinite"></animate>
+        </feoffset>
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"></fecolormatrix>
+        <feoffset in="g" result="g" dx="-2.18229" dy="1">
+          <animate attributename="dx" attributetype="XML" values="0; 0; 0; -3; 0; 8; 0;-1; 0" dur="0.15s" repeatcount="indefinite"></animate>
+        </feoffset>
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"></fecolormatrix>
+        <feblend in="r" in2="g" mode="screen" result="blend"></feblend>
+        <feblend in="blend" in2="b" mode="screen" result="blend"></feblend>
+      </filter>
+    </defs>
+    <defs>
+      <filter id="glitch2" x="0" y="0">
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"></fecolormatrix>
+        <feoffset in="r" result="r" dx="1.50167">
+          <animate class="animate-1" attributename="dx" attributetype="XML" values="91.6; 25; 0; 4; -2; -2; 0 ;-3; 0" dur="2s" repeatcount="indefinite"></animate>
+        </feoffset>
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"></fecolormatrix>
+        <feoffset in="g" result="g" dx="-1.50167" dy="1">
+          <animate class="animate-2" attributename="dx" attributetype="XML" values="-91.6; -25; 0; -3; 0; 2; 0 ;-1; 0" dur="2s" repeatcount="indefinite"></animate>
+        </feoffset>
+        <fecolormatrix in="SourceGraphic" mode="matrix" values="0 0 0 0 0 0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"></fecolormatrix>
+        <feoffset in="b" result="b" dx="0" dy="0">
+          <animate class="animate-3" attributename="dx" attributetype="XML" values="0; 3; -1; 0; 0; 2; 0 ;4; 0" dur="0.2s" repeatcount="indefinite"></animate>
+        </feoffset>
+        <feblend in="r" in2="g" mode="screen" result="blend"></feblend>
+        <feblend in="blend" in2="b" mode="screen" result="blend"></feblend>
+      </filter>
+    </defs>
+  </svg>
+  <script id="vertexShader" type="x-shader/x-vertex">
+    precision highp float;
+    
+    uniform float sineTime;
+    
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    
+    attribute vec3 position;
+    attribute vec3 offset;
+    attribute vec4 orientationStart;
+    attribute vec4 orientationEnd;
+    
+    varying vec3 vPosition;
+    void main(){
+    
+    	vPosition = offset * max(abs(sineTime * 2.0 + 1.0), 0.5) + position;
+    	vec4 orientation = normalize(mix(orientationStart, orientationEnd, sineTime));
+    	vec3 vcV = cross(orientation.xyz, vPosition);
+    	vPosition = vcV * (2.0 * orientation.w) + (cross(orientation.xyz, vcV) * 2.0 + vPosition);
+    
+    	gl_Position = projectionMatrix * modelViewMatrix * vec4( vPosition, .50 );
+    
+    }
     
     
-  </div>
-  
-
-
-  <div class="section footer" id="contact">
-    <div class="w-container footer-container">
-      <h3 class="h3-small intro">Contact</h3>
-      <h4 class="footer-title white">Get in touch !</h4>
-      <br/>
-      <p class="paragraph-white"><strong>Mobile</strong>:&nbsp;0938 625 380</p>
-      <p class="paragraph-white"><strong>Email</strong>:&nbsp;<a href="mailto:docilas555@gmail.com" class="link">docilas555@gmail.com</a>
-      </p>
-      <a class="w-inline-block menu-button gototop" href="#top">
-        <img src="images/Icon-arrowtop.png" alt="">
-      </a>
-    </div>
-  </div>
-
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script type="text/javascript" src="js/webflow.js"></script>
-  <script type="text/javascript" src="js/effect.js"></script>
-  <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
-
+    
+    
+    
+  </script>
+  <script src="assets/js/lib.min.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
-</html>
