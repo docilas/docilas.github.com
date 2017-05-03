@@ -109,7 +109,7 @@ function init() {
   var maskPass1 = new THREE.MaskPass( scene1, camera );
   var maskPass2 = new THREE.MaskPass( scene2, camera );
 
-  var texture1 = new THREE.TextureLoader().load( 'assets/images/rgb.jpg' );
+  var texture1 = new THREE.TextureLoader().load( 'assets/images/rgb2.jpg' );
   var texture2 = new THREE.TextureLoader().load( 'assets/images/test.jpg' );
 
   var texturePass1 = new THREE.TexturePass( texture1);
