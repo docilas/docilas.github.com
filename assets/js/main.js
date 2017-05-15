@@ -1,30 +1,64 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var composer, renderer, camera;
-var box, torus;
-var mouseX = 0;
-var mouseY = 0;
-
-var windowHalfX = window.innerWidth / 2;
-var windowHalfY = window.innerHeight / 2;
-
-window.addEventListener( 'resize', onWindowResize, false );
-document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-document.addEventListener( 'click', onDocumentMouseClick, false );
-
 var scene1, scene2;
+var composer, renderer, camera;
+var box;
+
+var bgWidth, bgHeight;
+var bgObj;
+var ax = 0,
+    ay = 0;
+
+
+// define Timeline animation
+var bgType1 = new TimelineMax({ repeat:-1, repeatDelay:1, yoyo:true, paused:true });
+var bgType2 = new TimelineMax({ paused:true, delay:3 });
+
+
+var turbVal = { val: 0.000001 };
+var turb = $('#noise feTurbulence')[0];
+var noiseEffect = new TimelineMax({ paused: true, repeat:-1, repeatDelay:3, onUpdate: function() {
+  turb.setAttribute('baseFrequency', '0 ' + turbVal.val);
+} });
+
+noiseEffect.to(turbVal, .2, { val: .7 });
+noiseEffect.to(turbVal, .4, { val: 0.000001 });
+
+//add event
+window.addEventListener( 'resize', onWindowResize, false );
+
+
+
 init();
 animate();
 
-function init() {
 
-  camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 100 );
+
+
+
+// set canvas size
+function getBgSize() {
+  if( window.innerWidth >= window.innerHeight*2 ){
+    bgWidth = window.innerWidth;
+    bgHeight = window.innerWidth/2;
+  }
+  else{
+    bgWidth = window.innerHeight*2;
+    bgHeight = window.innerHeight;
+  }
+
+}
+
+function init() {
+  getBgSize();
+
+  camera = new THREE.PerspectiveCamera( 50, bgWidth / bgHeight, 1, 100 );
   camera.position.z = 2;
 
   scene1 = new THREE.Scene();
   scene2 = new THREE.Scene();
 
-  // box = new THREE.Mesh( new THREE.BoxGeometry( 7, 4, 2 ) );
+
   box = new THREE.Mesh( new THREE.PlaneGeometry( 4, 2, 32 ));
 
   scene1.add( box );
@@ -32,7 +66,7 @@ function init() {
 
   // geometry
   var triangles = 1;
-  var instances = 4000;
+  var instances = 3500;
 
   var geometry = new THREE.InstancedBufferGeometry();
 
@@ -81,9 +115,8 @@ function init() {
 
   // material
   var material = new THREE.RawShaderMaterial( {
-
     uniforms: {
-      time: { value: 16.0 },
+      time: { value: 18.0 },
       sineTime: { value: 1.0 }
     },
     vertexShader: document.getElementById( 'vertexShader' ).textContent,
@@ -95,25 +128,24 @@ function init() {
 
   // end
   renderer = new THREE.WebGLRenderer( { antialias: false } );
-  // renderer.setClearColor( 0xe0e0e0 );
-  // renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( bgWidth, bgHeight );
   renderer.autoClear = false;
-  document.body.appendChild( renderer.domElement );
 
-  //
+  $('#bg').append( renderer.domElement )
 
+  //mask
   var clearPass = new THREE.ClearPass();
   var clearMaskPass = new THREE.ClearMaskPass();
 
   var maskPass1 = new THREE.MaskPass( scene1, camera );
   var maskPass2 = new THREE.MaskPass( scene2, camera );
 
-  var texture1 = new THREE.TextureLoader().load( 'assets/images/rgb2.jpg' );
-  var texture2 = new THREE.TextureLoader().load( 'assets/images/test.jpg' );
+  var texture1 = new THREE.TextureLoader().load( 'assets/images/bg1.jpg' );
+  var texture2 = new THREE.TextureLoader().load( 'assets/images/bg1b.jpg' );
 
-  var texturePass1 = new THREE.TexturePass( texture1);
-  var texturePass2 = new THREE.TexturePass( texture2, 1 );
+  var texturePass1 = new THREE.TexturePass( texture1 );
+  var texturePass2 = new THREE.TexturePass( texture2, .85 );
 
 
   var outputPass = new THREE.ShaderPass( THREE.CopyShader );
@@ -126,7 +158,7 @@ function init() {
     stencilBuffer: true
   };
 
-  var renderTarget = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, parameters );
+  var renderTarget = new THREE.WebGLRenderTarget( bgWidth, bgHeight, parameters );
 
   composer = new THREE.EffectComposer( renderer, renderTarget );
   composer.addPass( clearPass );
@@ -138,50 +170,85 @@ function init() {
   composer.addPass( clearMaskPass );
   composer.addPass( outputPass );
 
+  bgObj = scene2.children[0];
+
+  bgType1.to( bgObj.material.uniforms.time, 4, {value: 4, ease: Circ.easeInOut })
+         .to( bgObj.material.uniforms.time, 4, {value: 12, ease: Circ.easeInOut });
+
+  bgType2.to( bgObj.material.uniforms.time, 5, {value: -4, ease: Circ.easeInOut });
+
+  setBgAni(2);
+  $('.sec_home').addClass('show');
+
+}
+
+
+
+
+// set BG Animation type
+function setBgAni(type) {
+
+  if (type==1){
+    bgType2.stop();
+    bgType1.play();
+  }
+  else if(type==2){
+    bgType1.stop();
+    bgType2.play();
+  }
+
 }
 
 
 function onWindowResize() {
+  getBgSize();
 
-  windowHalfX = window.innerWidth / 2;
-  windowHalfY = window.innerHeight / 2;
-
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = bgWidth / bgHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  composer.setSize( window.innerWidth, window.innerHeight );
+
+  renderer.setSize( bgWidth, bgHeight );
 
 }
 
-function onDocumentMouseMove(event) {
+$('.sec_home').on('mousemove', function(e) {
+  ax = -(window.innerWidth / 2 - e.clientX)/ window.innerWidth;
+  ay = (window.innerHeight / 2 - e.clientY) / window.innerHeight;
+})
 
-  mouseX = ( event.clientX - windowHalfX ) / 100;
-  mouseY = ( event.clientY - windowHalfY ) / 100;
-  // console.log( mouseX - 10 )
-}
-function onDocumentMouseClick(event) {
-
-  TweenMax.fromTo( object.material.uniforms.time, 3, {value: 16}, {value: -5});
-  // object.material.uniforms.time.value = -5;
-  // console.log(object.material.uniforms.time.value);
-}
-var object
 function animate() {
-
   requestAnimationFrame( animate );
-
   var time = performance.now();
-  object = scene2.children[0];
-  object.rotation.y = time * 0.0005;
-  // console.log(time * 0.005)
-  // object.material.uniforms.time.value = time * 0.005;
-  object.material.uniforms.sineTime.value = Math.sin( object.material.uniforms.time.value * 0.05 );
 
-  // object.material.uniforms.time.value = -1;
-  // object.material.uniforms.sineTime.value = Math.sin( object.material.uniforms.time.value * 0.05 );
 
-  // console.log( object.material.uniforms.time.value, object.material.uniforms.sineTime.value )
-  // renderer.clear();
-  // renderer.render(scene1, camera);
+
+  bgObj.rotation.z = time * 0.0002;
+  bgObj.rotation.y =  ax||0;
+  bgObj.rotation.x =  ay||0;
+
+  // shake glitch
+  // bgObj.position.x = .02 * Math.sin( time );
+
+  bgObj.material.uniforms.sineTime.value = Math.sin( bgObj.material.uniforms.time.value * 0.05 );
+
   composer.render( );
 }
+
+
+
+// work hover mouser event
+$('.sec_work .block').on('mouseenter', function() {
+  var $this = $(this);
+  TweenMax.set($this, {className:'+=do_glitch'});
+  TweenMax.set($this, {className:'-=do_glitch', delay: 1.5});
+  noiseEffect.restart();
+});
+
+$('.sec_work').on('mouseenter', function() {
+  setBgAni(1);
+});
+
+
+
+
+
+
