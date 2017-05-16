@@ -172,12 +172,11 @@ function init() {
 
   bgObj = scene2.children[0];
 
-  bgType1.to( bgObj.material.uniforms.time, 4, {value: 4, ease: Circ.easeInOut })
-         .to( bgObj.material.uniforms.time, 4, {value: 12, ease: Circ.easeInOut });
+  bgType1.to( bgObj.material.uniforms.time, 8, {value: 10, ease: Circ.easeInOut });
 
   bgType2.to( bgObj.material.uniforms.time, 5, {value: -4, ease: Circ.easeInOut });
 
-  setBgAni(2);
+  setBgAni(1);
   $('.sec_home').addClass('show');
 
 }
@@ -190,11 +189,17 @@ function setBgAni(type) {
 
   if (type==1){
     bgType2.stop();
-    bgType1.play();
+    TweenMax.to( bgObj.material.uniforms.time, 18, {value: 18, ease: Circ.easeInOut, onComplete:cont });
+
+
   }
   else if(type==2){
     bgType1.stop();
     bgType2.play();
+  }
+
+  function cont() {
+    bgType1.play();
   }
 
 }
@@ -243,9 +248,9 @@ $('.sec_work .block').on('mouseenter', function() {
   noiseEffect.restart();
 });
 
-$('.sec_work').on('mouseenter', function() {
-  setBgAni(1);
-});
+// $('.sec_work').on('mouseenter', function() {
+//   setBgAni(1);
+// });
 
 
 
