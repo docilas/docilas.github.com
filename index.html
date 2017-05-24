@@ -6,21 +6,46 @@
   <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
+  <div id="loading">
+    <p data-text="loading...">loading...</p>
+    <div class="progress"></div>
+  </div>
+  <div class="work-1" id="mask">
+    <div class="wrapper">
+      <div class="masthead"></div>
+    </div>
+  </div>
   <main>
     <div id="bg"></div>
     <nav id="menu">
       <ul>
-        <li class="btn-logo"><span>[ CHIH ]</span></li>
+        <li class="btn-home bold"><span>[ CHIH ]</span></li>
         <li class="btn-about"><span>About</span></li>
         <li class="btn-scroll"><span>View My Work</span></li>
         <li class="btn-discover hide"><span>Discover</span></li>
+        <li class="list_num hide"><span class="work_num" data-num="1"></span><span>/</span><span>10</span></li>
       </ul>
     </nav>
+    <section class="sec sec_about">
+      <div class="btn-close close-about"><span></span><span></span></div>
+      <div class="inner">
+        <div class="profile"><img src="assets/images/me.jpg" alt=""/></div>
+        <div class="text">
+          <h2>About Me.</h2>
+          <p>Hello, I'm&nbsp;<span class="glitch" data-text="Chih Yuan Kuo">Chih Yuan Kuo</span>, I'm looking for a&nbsp;<span class="glitch" data-text="Front-end web developer job">Front-end web developer job&nbsp;</span>in&nbsp;<span class="glitch" data-text="Australia">Australia&nbsp;</span>with working holiday vias before May 2018.</p>
+          <p>Three years of experience as front-end web developer in Advertising. Accomplished more than 20 projects independently, include coding layout, creating interactive designs, animation effect, RWD, and implementing social APIs. Impressive work like developing Canvas draw path, rendering 3D effects and physics engine simulation.</p>
+          <p>I enjoy building something from start to end, constantly improve my web skills and stay up-to-date with new methods and technology. Love scuba diving and listen Rock music, and want to try snowboarding soon.</p>
+          <h2>Contact Info.</h2>
+          <p>Mobile :&nbsp;<a class="glitch" href="tel:+61468943332" data-text="+61 468 943 332">+61 468 943 332</a><br/>Mail :&nbsp;<a class="glitch" href="mailto:docilas555@gmail.com" data-text="docilas555@gmail.com">docilas555@gmail.com</a></p>
+          <div class="social"><a href="http://www.linkedin.com/in/chih-yuan-kuo" target="_blank"><span class="glitch" data-text="Linkedin">Linkedin</span></a><a href="https://www.facebook.com/docilas" target="_blank"><span class="glitch" data-text="Facebook">Facebook</span></a><a href="https://www.instagram.com/docilas555/" target="_blank"><span class="glitch" data-text="Instagram">Instagram</span></a></div>
+        </div>
+      </div>
+    </section>
     <section class="sec sec_work">
       <div class="work_list">
         <div class="flex_wrap">
           <div class="work work-1">
-            <div class="img"><img src="assets/images/work/creativity.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Creatibity Week">Creatibity Week</h3>
@@ -31,7 +56,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-2">
-            <div class="img"><img src="assets/images/work/hk16.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Discover Hong Kong">Discover Hong Kong</h3>
@@ -42,7 +67,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-3">
-            <div class="img"><img src="assets/images/work/letscafe.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Let's Cafe">Let's Cafe</h3>
@@ -53,7 +78,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-4">
-            <div class="img"><img src="assets/images/work/sakura.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Sakura Rangehood">Sakura Rangehood</h3>
@@ -64,7 +89,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-5">
-            <div class="img"><img src="assets/images/work/craft.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">demo</p>
               <h3 data-text="Crafts">Crafts</h3>
@@ -75,7 +100,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-6">
-            <div class="img"><img src="assets/images/work/tsum.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Familymart x Disney">Familymart x Disney</h3>
@@ -86,7 +111,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-7">
-            <div class="img"><img src="assets/images/work/s7.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Samaung S7">Samaung S7</h3>
@@ -97,7 +122,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-8">
-            <div class="img"><img src="assets/images/work/pxmart.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Pxmart Ghost Festival">Pxmart Ghost Festival</h3>
@@ -108,7 +133,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-9">
-            <div class="img"><img src="assets/images/work/bausch.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Bausch+Lomb">Bausch+Lomb</h3>
@@ -119,7 +144,7 @@
         </div>
         <div class="flex_wrap">
           <div class="work work-10">
-            <div class="img"><img src="assets/images/work/q1.png" alt=""/></div>
+            <div class="masthead"></div>
             <div class="info">
               <p class="type">website</p>
               <h3 data-text="Q1 Building">Q1 Building</h3>
@@ -128,6 +153,13 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+    <section class="sec sec_work_inner">
+      <div class="btn-close close-workinner"><span></span><span></span></div>
+      <div class="masthead"></div>
+      <div class="wrapper">
+        <div class="inner"></div>
       </div>
     </section>
   </main>
