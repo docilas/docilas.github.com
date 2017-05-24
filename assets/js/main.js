@@ -7,7 +7,7 @@ $(function() {
   let workIndex = -1;
   var workPrev, workNow;
   const workNum = $('.sec_work .work').length;
-  let workAni = false;
+  let animating = false;
   let viewArea = 'home';
   let viewBack = '';
 
@@ -31,6 +31,7 @@ $(function() {
     },
     active: function() {
       console.log('font active');
+      // imageload
       imgLoad( 'body', init);
     },
     google: {
@@ -38,11 +39,6 @@ $(function() {
     }
   };
   WebFont.load(WebFontConfig);
-
-  // imageload
-
-
-
 
   // pixi background
   const app = new PIXI.Application(window.innerWidth, window.innerHeight);
@@ -197,7 +193,7 @@ $(function() {
   }
 
   function workNext(way) {
-    workAni = true;
+    animating = true;
     viewArea = 'worklist';
     TweenMax.set(['.btn-discover', '.list_num'], {className:'+=hide'});
 
@@ -212,7 +208,7 @@ $(function() {
       workNow = $('.sec_work .work').eq(workIndex);
       workPrev = $('.sec_work .work').eq(workIndex-1);
     }
-    TweenMax.to( '.work_list', .75, {y: -window.innerHeight* (workIndex + 1), ease: Circ.easeInOut, onComplete: aniEnd});
+    TweenMax.to( '.work_list', .75, {y: -window.innerHeight* (workIndex + 1), ease: Circ.easeInOut});
 
     if (workIndex !== 0) {
       TweenMax.fromTo( workPrev.find('.masthead'), .5, { z:10 }, { z: -20, ease: Circ.easeOut});
@@ -222,7 +218,7 @@ $(function() {
     workPrev.removeClass('active');
     workNow.addClass('active');
     TweenMax.fromTo( workNow.find('.masthead'), .75, { z:-20 }, { z: 10, delay:.5, ease: Circ.easeOut});
-    TweenMax.fromTo( workNow.find('.info'), .75, { z:-15 }, { z: 40, delay:.5, ease: Circ.easeOut});
+    TweenMax.fromTo( workNow.find('.info'), .75, { z:-15 }, { z: 40, delay:.5, ease: Circ.easeOut, onComplete: aniEnd});
 
     if (workIndex == -1) {
       // back to home
@@ -249,7 +245,7 @@ $(function() {
 
   }
   function aniEnd() {
-    workAni = false;
+    animating = false;
   }
 
   function workInnerIn() {
@@ -271,8 +267,8 @@ $(function() {
     function cont() {
       TweenMax.set('#mask', {className: `-=work-${workIndex+1} show`, delay: .5 });
       TweenMax.to('.sec_work', .3, { alpha:1 ,delay: .25});
-
       TweenMax.set('.btn-discover', {className:'-=hide', delay: .25 });
+      animating = false;
     }
   }
 
@@ -293,35 +289,52 @@ $(function() {
     }
 
   });
-  $('body').on('mousewheel', function(e) {
+  var indicator = new WheelIndicator({
+    callback: function(e){
+      if ( !animating && viewArea!=='about' && viewArea!=='workinner' ) {
+        if (e.direction=='up' && workIndex == -1) {
+          return false;
+        }
+        else if(e.direction=='down' && workIndex== $('.sec_work .work').length -1){
+          return false;
+        }
+        else{
+          workNext(e.direction);
+        }
+      }
 
-    if ( !workAni && viewArea!=='about' && viewArea!=='workinner' ) {
-      if (e.deltaY > 0) {
-        //wheel up
-        if (workIndex == -1) {
-          // home
-          return false;
-        }
-        else{
-          workNext('up');
-        }
-      }
-      else{
-        //wheel down
-        if (workIndex== $('.sec_work .work').length -1 ) {
-          //last one
-          return false;
-        }
-        else{
-          workNext('down');
-        }
-      }
-    }
+    },
+    preventMouse: false
   });
+  // $('body').on('mousewheel', function(e) {
+  //   console.log(e.deltaY)
+  //   if ( !animating && viewArea!=='about' && viewArea!=='workinner' ) {
+  //     if (e.deltaY > 0) {
+  //       //wheel up
+  //       if (workIndex == -1) {
+  //         // home
+  //         return false;
+  //       }
+  //       else{
+  //         workNext('up');
+  //       }
+  //     }
+  //     else{
+  //       //wheel down
+  //       if (workIndex== $('.sec_work .work').length -1 ) {
+  //         //last one
+  //         return false;
+  //       }
+  //       else{
+  //         workNext('down');
+  //       }
+  //     }
+  //   }
+  // });
 
   $('.btn-scroll').on('click', ()=>{ workNext('down'); });
   $('.btn-home').on('click', ()=>{
-    if (!workAni) {
+    if (!animating) {
       workIndex = 0;
       workNext('up');
     }
@@ -357,6 +370,7 @@ $(function() {
 
   $('.close-workinner').on('click', ()=>{
     viewArea = viewBack;
+    animating = true;
     workInnerOut();
   });
 
@@ -368,7 +382,7 @@ $(function() {
 
   // mc.on("swipeup swipedown", function(e) {
   //   console.log( e.type +" gesture detected." );
-  //   if ( !workAni ) {
+  //   if ( !animating ) {
   //     if (e.type =='swipedown') {
   //       //wheel up
   //       if (workIndex == -1) {
