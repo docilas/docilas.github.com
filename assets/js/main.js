@@ -5,7 +5,7 @@ $(function() {
   let imgLoaded, imgTotal;
   const power = 7;
   let workIndex = -1;
-  var workPrev, workNow;
+  let workPrev, workNow;
   const workNum = $('.sec_work .work').length;
   let animating = false;
   let viewArea = 'home';
@@ -13,6 +13,18 @@ $(function() {
 
   let workInnerText;
   let jsonLoad = false;
+  let isDesktop;
+
+  getDevice();
+  function getDevice(){
+    if (device.mobile() || device.tablet()) {
+      isDesktop = false;
+    }
+    else{
+      isDesktop = true;
+    }
+  }
+
 
   //json load
   $.ajax({
@@ -59,23 +71,30 @@ $(function() {
   bg.position= {x: app.renderer.width / 2, y: app.renderer.height / 2};
 
   // pixi text
-  // 'CHIH\nYUAN\nKUO'
-  const text1 = new PIXI.Text('CHIH YUAN KUO', {
+  const pixiText = (window.innerWidth < 1000 )? 'CHIH\nYUAN\nKUO': 'CHIH YUAN KUO';
+  let pixiTextSize;
+  if ( window.innerWidth > 1366 )
+    pixiTextSize = 150;
+  else if ( window.innerWidth > 480 )
+    pixiTextSize = 100;
+  else
+    pixiTextSize = 80;
+
+  const text1 = new PIXI.Text(pixiText, {
     fontWeight: 700,
-    fontSize: 100,
+    fontSize: pixiTextSize,
     fontFamily: 'Poppins',
     fill: '#333',
     align: 'center',
     strokeThickness: 0
   });
-
   text1.anchor.set(.5);
   text1.blendMode = PIXI.BLEND_MODES.ADD;
   text1.position= {x: app.renderer.width / 2, y: app.renderer.height / 2};
 
-  const textLft = new PIXI.Text('CHIH YUAN KUO', {
+  const textLft = new PIXI.Text(pixiText, {
     fontWeight: 700,
-    fontSize: 100,
+    fontSize: pixiTextSize,
     fontFamily: 'Poppins',
     fill: '#FC577D',
     align: 'center',
@@ -86,9 +105,9 @@ $(function() {
   textLft.position= {x: app.renderer.width / 2, y: app.renderer.height / 2};
   textLft.alpha = 0;
 
-  const textRig = new PIXI.Text('CHIH YUAN KUO', {
+  const textRig = new PIXI.Text(pixiText, {
     fontWeight: 700,
-    fontSize: 100,
+    fontSize: pixiTextSize,
     fontFamily: 'Poppins',
     fill: '#54F3B7',
     align: 'center',
@@ -99,22 +118,7 @@ $(function() {
   textRig.position= {x: app.renderer.width / 2, y: app.renderer.height / 2};
   textRig.alpha = 0;
 
-  container.addChild(bg, textLft, textRig, text1);
 
-  container.filters = [displacementFilter];
-  app.stage.addChild(container, displacementSprite);
-
-  app.ticker.add(function(delta) {
-    count += 0.1;
-    displacementSprite.rotation += 0.005;
-    displacementSprite.scale.x = 2 + Math.sin(count) * 0.2;
-    displacementSprite.scale.y = 2 + Math.cos(count) * 0.2;
-
-    if (viewArea=='home') {
-      text1.scale.x = 1 + Math.cos(count) * 0.003;
-      text1.scale.y = 1 + Math.sin(count) * 0.006;
-    }
-  });
 
   // title animation
   const tl = new TimelineMax({ repeat: 1, repeatDelay: .1, paused: true});
@@ -139,16 +143,16 @@ $(function() {
       .to( textLft, .05, {x: text1.x, y: text1.y, alpha: 0.1, ease:Circ.easeOut })
       .to( textRig, .05, {x: text1.x, y: text1.y, alpha: 0.1, ease:Circ.easeOut }, "-=.05");
 
-
-
   function setBgSize() {
-    if ( window.innerWidth *.5625 <  window.innerHeight ) {
-      bg.scale.set( window.innerHeight / .5625 / 1920 );
+    if (isDesktop) {
+      if ( window.innerWidth *.5625 <  window.innerHeight ) {
+        bg.scale.set( window.innerHeight / .5625 / 1920 );
+      }
+      else{
+        bg.scale.set( window.innerWidth * .5625 / 1080 );
+      }
+      TweenMax.set( '.work_list', {y: -$(window).height() * (workIndex+1)});
     }
-    else{
-      bg.scale.set( window.innerWidth * .5625 / 1080 );
-    }
-    TweenMax.set( '.sec_work', {y: -window.innerHeight * (workIndex+1)});
   }
 
   function imgLoad(tar, cont) {
@@ -174,7 +178,7 @@ $(function() {
         console.log('all images loaded, at least one is broken');
       })
       .progress( function( instance, image ) {
-        var result = image.isLoaded ? 'loaded' : 'broken';
+        let result = image.isLoaded ? 'loaded' : 'broken';
         console.log( 'image is ' + result + ' for ' + image.img.src );
         imgLoaded++;
         TweenMax.to('#loading .progress', .3, {width: imgLoaded / imgTotal *100 +'%'});
@@ -182,10 +186,33 @@ $(function() {
   }
 
   function init() {
+    container.addChild(bg, textLft, textRig, text1);
+    container.filters = [displacementFilter];
+    app.stage.addChild(container, displacementSprite);
+
+    app.ticker.add(function(delta) {
+      count += (isDesktop)?0.05:0.01;
+      displacementSprite.rotation += 0.005;
+      displacementSprite.scale.x = 2 + Math.sin(count) * 0.2;
+      displacementSprite.scale.y = 2 + Math.cos(count) * 0.2;
+
+      if (viewArea=='home') {
+        text1.scale.x = 1 + Math.cos(count) * 0.003;
+        text1.scale.y = 1 + Math.sin(count) * 0.006;
+      }
+    });
+
     TweenMax.fromTo('#bg canvas', 1.5, {z:200 }, {z:bg_z, alpha:1, ease: Sine.easeOut});
     TweenMax.fromTo(text1, 1.5, {alpha: 0}, {alpha: 1, delay: .25, ease: Sine.easeOut, onComplete:glitchOn});
 
-    TweenMax.set('#menu', {className:'+=active', delay:2.5});
+    TweenMax.set('html', {className:'+=init_done', delay:2.5});
+  }
+
+  function menuToggle() {
+    if ($('html').hasClass('menu-open') )
+      $('html').removeClass('menu-open');
+    else
+      $('html').addClass('menu-open');
   }
 
   function glitchOn(){
@@ -195,8 +222,7 @@ $(function() {
   function workNext(way) {
     animating = true;
     viewArea = 'worklist';
-    TweenMax.set(['.btn-discover', '.list_num'], {className:'+=hide'});
-
+    TweenMax.set('.list_num', {className:'+=hide'});
 
     if (way=='up') {
       workIndex--;
@@ -208,37 +234,44 @@ $(function() {
       workNow = $('.sec_work .work').eq(workIndex);
       workPrev = $('.sec_work .work').eq(workIndex-1);
     }
-    TweenMax.to( '.work_list', .75, {y: -window.innerHeight* (workIndex + 1), ease: Circ.easeInOut});
+    TweenMax.to( '.work_list', .75, {y: -$(window).height()* (workIndex + 1), ease: Circ.easeInOut, onComplete: aniEnd});
 
     if (workIndex !== 0) {
-      TweenMax.fromTo( workPrev.find('.masthead'), .5, { z:10 }, { z: -20, ease: Circ.easeOut});
-      TweenMax.fromTo( workPrev.find('.info'), .5, { z:40 }, { z: -15, ease: Circ.easeOut});
+      if (isDesktop) {
+
+      }
+      if ( window.innerWidth > 768) {
+        TweenMax.fromTo( workPrev.find('.masthead'), .5, { z:10 }, { z: -20, ease: Circ.easeOut});
+        TweenMax.fromTo( workPrev.find('.info'), .5, { z:40 }, { z: -15, ease: Circ.easeOut});
+      }
+
     }
     $('.work_num').attr('data-num', workIndex+1);
     workPrev.removeClass('active');
     workNow.addClass('active');
-    TweenMax.fromTo( workNow.find('.masthead'), .75, { z:-20 }, { z: 10, delay:.5, ease: Circ.easeOut});
-    TweenMax.fromTo( workNow.find('.info'), .75, { z:-15 }, { z: 40, delay:.5, ease: Circ.easeOut, onComplete: aniEnd});
+    if ( window.innerWidth > 768) {
+      TweenMax.fromTo( workNow.find('.masthead'), .6, { z:-20,  }, { z: 10, delay:.5, ease: Circ.easeOut});
+      TweenMax.fromTo( workNow.find('.info'), .75, { z:-15}, { z: 40, delay:.6, ease: Circ.easeOut});
+    }
 
     if (workIndex == -1) {
       // back to home
       viewArea = 'home';
       bg_z = -10;
-      TweenMax.to('#bg canvas', .75, {z:bg_z, ease:Sine.easeOut});
-      TweenMax.set('.btn-scroll', {className:'-=hide'});
+      TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
+      TweenMax.set('#bg .tip', {className:'-=hide'});
       tl.restart();
     }
     else{
       // to work list
-      TweenMax.set(['.btn-discover', '.list_num'], {className:'-=hide', delay:.2});
-      TweenMax.set('.btn-scroll', {className:'+=hide'});
+      TweenMax.set('.list_num', {className:'-=hide', delay:.2});
+      TweenMax.set('#bg .tip', {className:'+=hide'});
 
       if(workIndex == 0){
         // to work list
-        bg_z = -50;
-        TweenMax.to('#bg canvas', .75, {z:bg_z, ease:Sine.easeOut});
-        TweenMax.set(['.btn-discover', '.list_num'], {className:'+=hide'});
-
+        bg_z = (isDesktop)?-50: -10;
+        TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
+        TweenMax.set('.list_num', {className:'+=hide'});
       }
     }
     bg_r = Math.abs(bg_z / 10);
@@ -249,111 +282,133 @@ $(function() {
   }
 
   function workInnerIn() {
-    TweenMax.fromTo('#mask .masthead', .5, { width:'83%', paddingTop:'37%' }, { width:'100%', paddingTop:'30%', ease:Circ.easeOut, onComplete: cont});
+    if (window.innerWidth > 768)
+      TweenMax.fromTo('#mask .masthead', .5, { width:'83%', paddingTop:'37%' }, { width:'100%', paddingTop:'30%', ease:Circ.easeOut, onComplete: cont});
+    else{
+      TweenMax.set('.sec_work_inner', {className:`+=show work-${workIndex+1}`});
+      TweenMax.to('.sec_work_inner', .5, { alpha:1, delay:.1 });
+    }
 
     function cont() {
-      TweenMax.to('#mask .masthead', .5, { y: ( $('#mask .masthead')[0].offsetHeight-window.innerHeight)/2 , delay:.25, ease:Circ.easeOut});
-      TweenMax.set('#mask', {className:'-=show', delay:.75 });
-      TweenMax.set('.sec_work_inner', {className:`+=show work-${workIndex+1}`, delay:.75 });
+      TweenMax.to('#mask .masthead', .5, { y: ( $('#mask .masthead')[0].offsetHeight-$(window).height() )/2 , delay:.25, ease:Circ.easeOut});
+      TweenMax.set('#mask', {className:`-=show work-${workIndex+1}`, delay:.75 });
+      TweenMax.set('.sec_work_inner', {className:`+=show work-${workIndex+1}`, alpha:1, delay:.75 });
     }
   }
 
   function workInnerOut() {
-    TweenMax.set('#mask', {className:'+=show' });
-    TweenMax.set('.sec_work_inner', {className:`-=show work-${workIndex+1}` });
-    TweenMax.to('#mask .masthead', .5, {y:'0', ease:Circ.easeOut });
-    TweenMax.fromTo('#mask .masthead', .5, { width:'100%', paddingTop:'30%' }, { width:'83%', paddingTop:'37%', ease:Circ.easeOut, onComplete: cont});
+
+    if (window.innerWidth > 768)
+      TweenMax.set('#mask .masthead', { width:'83%', paddingTop:'37%', y:'0'});
+
+    TweenMax.to('.sec_work_inner', .5, {alpha:0 });
+    TweenMax.fromTo('.sec_work', .5, {alpha:0 }, { alpha:1, delay:.75, onComplete:cont});
 
     function cont() {
-      TweenMax.set('#mask', {className: `-=work-${workIndex+1} show`, delay: .5 });
-      TweenMax.to('.sec_work', .3, { alpha:1 ,delay: .25});
-      TweenMax.set('.btn-discover', {className:'-=hide', delay: .25 });
+      TweenMax.set('.sec_work_inner', {className:`-=show work-${workIndex+1}` });
       animating = false;
+    }
+
+  }
+  function handleOrientation(event) {
+    let dx = event.gamma/90; // In degree in the range [-180,180]
+    let dy = event.beta/90; // In degree in the range [-90,90]
+
+    if (viewArea == 'worklist') {
+      TweenMax.set( '#bg canvas', { rotationX: -dy*5/bg_r, rotationY: dx*5/bg_r, x: -dx*10/bg_r+'%', y:-dy*10/bg_r+'%' });
     }
   }
 
-
   $(window).resize(setBgSize);
-  // mouse event
+  $('#menu-trigger').on('click', menuToggle);
+  $('#menu .btn').on('click', menuToggle);
 
-  $('body').on('mousemove touchmove', (e)=>{
 
-    let ax = e.clientX / window.innerWidth -.5,
-        ay = e.clientY / window.innerHeight - .5;
+  // mouse wheel / swipe
+  if (isDesktop) {
+    let indicator = new WheelIndicator({
+      callback: function(e){
+        if ( !animating && viewArea!=='about' && viewArea!=='workinner' ) {
+          if (e.direction=='up' && workIndex == -1) {
+            return false;
+          }
+          else if(e.direction=='down' && workIndex== $('.sec_work .work').length -1){
+            return false;
+          }
+          else{
+            workNext(e.direction);
+          }
+        }
 
-    TweenMax.to( '#bg canvas', .5, { rotationX: -ay*7/bg_r, rotationY: ax*7/bg_r, x: -ax*10/bg_r+'%', y:-ay*10/bg_r+'%' });
+      },
+      preventMouse: false
+    });
 
-    if (viewArea == 'worklist') {
-      TweenMax.to( workNow.find('.masthead'), .75, { rotationX: -ay*5, rotationY: ax*5, x:-ax*5+'%', y:-ay*5+'%' });
-      TweenMax.to( workNow.find('.info'), 1, { rotationX: -ay*7, rotationY: ax*7, x:-ax*10+'%', y:-ay*10+'%' });
-    }
+    $('body').on('mousemove', (e)=>{
 
-  });
-  var indicator = new WheelIndicator({
-    callback: function(e){
+      let ax = e.clientX / window.innerWidth -.5,
+          ay = e.clientY / window.innerHeight - .5;
+
+      TweenMax.to( '#bg canvas', .5, { rotationX: -ay*7/bg_r, rotationY: ax*7/bg_r, x: -ax*10/bg_r+'%', y:-ay*10/bg_r+'%' });
+
+      if (viewArea == 'worklist') {
+        TweenMax.to( workNow.find('.masthead'), .75, { rotationX: -ay*5, rotationY: ax*5, x:-ax*5+'%', y:-ay*5+'%' });
+        TweenMax.to( workNow.find('.info'), 1, { rotationX: -ay*7, rotationY: ax*7, x:-ax*10+'%', y:-ay*10+'%' });
+      }
+
+    });
+  }
+  else{
+    let mc = new Hammer( $('.sec_work')[0] ) ;
+
+    mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+    mc.on("swipeup swipedown", function(e) {
       if ( !animating && viewArea!=='about' && viewArea!=='workinner' ) {
-        if (e.direction=='up' && workIndex == -1) {
+
+        if (e.type=='swipedown' && workIndex == -1) {
           return false;
         }
-        else if(e.direction=='down' && workIndex== $('.sec_work .work').length -1){
+        else if(e.type=='swipeup' && workIndex== $('.sec_work .work').length -1){
           return false;
         }
         else{
-          workNext(e.direction);
+          workNext( (e.type=='swipeup')? 'down':'up' );
         }
       }
+      else{
+        return false;
+      }
 
-    },
-    preventMouse: false
+    });
+    window.addEventListener('deviceorientation', handleOrientation);
+  }
+
+  $('.btn-work').on('click', ()=>{
+    if (viewArea!=='worklist')
+      workNext('down');
   });
-  // $('body').on('mousewheel', function(e) {
-  //   console.log(e.deltaY)
-  //   if ( !animating && viewArea!=='about' && viewArea!=='workinner' ) {
-  //     if (e.deltaY > 0) {
-  //       //wheel up
-  //       if (workIndex == -1) {
-  //         // home
-  //         return false;
-  //       }
-  //       else{
-  //         workNext('up');
-  //       }
-  //     }
-  //     else{
-  //       //wheel down
-  //       if (workIndex== $('.sec_work .work').length -1 ) {
-  //         //last one
-  //         return false;
-  //       }
-  //       else{
-  //         workNext('down');
-  //       }
-  //     }
-  //   }
-  // });
-
-  $('.btn-scroll').on('click', ()=>{ workNext('down'); });
   $('.btn-home').on('click', ()=>{
     if (!animating) {
       workIndex = 0;
       workNext('up');
     }
-
   });
-
+  //about on/off
   $('.btn-about').on('click', ()=>{
     viewBack = viewArea;
     viewArea='about';
     TweenMax.set('.sec_about', {className:'+=show'});
-    TweenMax.to('.sec_about', .3, { x:'0%', delay:.1, ease:Circ.easeOut });
+    TweenMax.to('.sec_about ', .6, { alpha:1, ease:Sine.easeOut });
+    TweenMax.to('.sec_about .wrapper', .5, { x:'0%', delay:.2, ease:Circ.easeOut });
   });
   $('.close-about').on('click', ()=>{
     viewArea = viewBack;
-    TweenMax.to('.sec_about', .3, { x:'-100%'});
-    TweenMax.set('.sec_about', {className:'-=show', delay:.35, ease:Circ.easeOut});
-
+    TweenMax.to('.sec_about ', .3, { alpha:0, delay:.1, ease:Circ.easeOut });
+    TweenMax.to('.sec_about .wrapper', .5, { x:'-20%'});
+    TweenMax.set('.sec_about', {className:'-=show', delay:.55, ease:Circ.easeOut});
   });
-
+  //work inner on/off
   $('.btn-discover').on('click', ()=>{
     if (jsonLoad) {
       viewBack = viewArea;
@@ -361,50 +416,16 @@ $(function() {
       $('.sec_work_inner .inner').html( workInnerText[`work-${workIndex+1}`] );
       imgLoad('.sec_work_inner', workInnerIn);
 
-      TweenMax.set('.btn-discover', {className:'+=hide' });
-      TweenMax.set('#mask', {className: `+=show work-${workIndex+1}` });
       TweenMax.to('.sec_work', .3, { alpha:0 });
+      if (window.innerWidth>768)
+        TweenMax.set('#mask', {className: `+=show work-${workIndex+1}` });
     }
-
   });
-
   $('.close-workinner').on('click', ()=>{
     viewArea = viewBack;
     animating = true;
     workInnerOut();
   });
-
-
-
-  // use when non desktop
-  // var mc = new Hammer( $('body')[0] ) ;
-  // mc.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-
-  // mc.on("swipeup swipedown", function(e) {
-  //   console.log( e.type +" gesture detected." );
-  //   if ( !animating ) {
-  //     if (e.type =='swipedown') {
-  //       //wheel up
-  //       if (workIndex == -1) {
-  //         // home
-  //         return false;
-  //       }
-  //       else{
-  //         workNext('up');
-  //       }
-  //     }
-  //     else{
-  //       //wheel down
-  //       if (workIndex== $('.sec_work .work').length -1 ) {
-  //         //last one
-  //         return false;
-  //       }
-  //       else{
-  //         workNext('down');
-  //       }
-  //     }
-  //   }
-  // });
 
 
 });
