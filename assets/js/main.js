@@ -10,7 +10,7 @@ $(function() {
   let animating = false;
   let viewArea = 'home';
   let viewBack = '';
-
+  let pageHeight;
   let workInnerText;
   let jsonLoad = false;
   let isDesktop;
@@ -37,7 +37,7 @@ $(function() {
   });
 
   // font load
-  WebFontConfig = {
+  let WebFontConfig = {
     loading: function() {
       console.log('font loading')
     },
@@ -56,7 +56,7 @@ $(function() {
   const app = new PIXI.Application(window.innerWidth, window.innerHeight);
   $('#bg').append(app.view);
 
-  container = new PIXI.Container();
+  const container = new PIXI.Container();
 
   const displacementSprite = PIXI.Sprite.fromImage('assets/images/filter.png');
   const displacementFilter = new PIXI.filters.DisplacementFilter(displacementSprite);
@@ -144,6 +144,7 @@ $(function() {
       .to( textRig, .05, {x: text1.x, y: text1.y, alpha: 0.1, ease:Circ.easeOut }, "-=.05");
 
   function setBgSize() {
+    pageHeight = $('#bg').height();
     if (isDesktop) {
       if ( window.innerWidth *.5625 <  window.innerHeight ) {
         bg.scale.set( window.innerHeight / .5625 / 1920 );
@@ -151,8 +152,9 @@ $(function() {
       else{
         bg.scale.set( window.innerWidth * .5625 / 1080 );
       }
-      TweenMax.set( '.work_list', {y: -$(window).height() * (workIndex+1)});
+      TweenMax.set( '.work_list', {y: -pageHeight * (workIndex+1)});
     }
+
   }
 
   function imgLoad(tar, cont) {
@@ -234,7 +236,7 @@ $(function() {
       workNow = $('.sec_work .work').eq(workIndex);
       workPrev = $('.sec_work .work').eq(workIndex-1);
     }
-    TweenMax.to( '.work_list', .75, {y: -$(window).height()* (workIndex + 1), ease: Circ.easeInOut, onComplete: aniEnd});
+    TweenMax.to( '.work_list', .75, {y: -pageHeight* (workIndex + 1), ease: Circ.easeInOut, onComplete: aniEnd});
 
     if (workIndex !== 0) {
       if (isDesktop) {
@@ -290,7 +292,7 @@ $(function() {
     }
 
     function cont() {
-      TweenMax.to('#mask .masthead', .5, { y: ( $('#mask .masthead')[0].offsetHeight-$(window).height() )/2 , delay:.25, ease:Circ.easeOut});
+      TweenMax.to('#mask .masthead', .5, { y: ( $('#mask .masthead')[0].offsetHeight-pageHeight )/2 , delay:.25, ease:Circ.easeOut});
       TweenMax.set('#mask', {className:`-=show work-${workIndex+1}`, delay:.75 });
       TweenMax.set('.sec_work_inner', {className:`+=show work-${workIndex+1}`, alpha:1, delay:.75 });
     }
