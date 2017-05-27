@@ -263,6 +263,7 @@ $(function() {
       TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
       TweenMax.set('#bg .tip', {className:'-=hide'});
       tl.restart();
+      ga('send', 'page-Home');
     }
     else{
       // to work list
@@ -275,6 +276,7 @@ $(function() {
         TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
         TweenMax.set('.list_num', {className:'+=hide'});
       }
+      ga('send', `page-Work-${workIndex+1}`);
     }
     bg_r = Math.abs(bg_z / 10);
 
@@ -387,13 +389,16 @@ $(function() {
   }
 
   $('.btn-work').on('click', ()=>{
-    if (viewArea!=='worklist')
+    if (viewArea!=='worklist'){
       workNext('down');
+      ga('send', 'event', 'btn', 'click', 'btn-work');
+    }
   });
   $('.btn-home').on('click', ()=>{
     if (!animating) {
       workIndex = 0;
       workNext('up');
+      ga('send', 'event', 'btn', 'click', 'btn-home');
     }
   });
   //about on/off
@@ -403,12 +408,14 @@ $(function() {
     TweenMax.set('.sec_about', {className:'+=show'});
     TweenMax.to('.sec_about ', .6, { alpha:1, ease:Sine.easeOut });
     TweenMax.to('.sec_about .wrapper', .5, { x:'0%', delay:.2, ease:Circ.easeOut });
+    ga('send', 'event', 'btn', 'click', 'btn-about');
   });
   $('.close-about').on('click', ()=>{
     viewArea = viewBack;
     TweenMax.to('.sec_about ', .3, { alpha:0, delay:.1, ease:Circ.easeOut });
     TweenMax.to('.sec_about .wrapper', .5, { x:'-20%'});
     TweenMax.set('.sec_about', {className:'-=show', delay:.55, ease:Circ.easeOut});
+    ga('send', 'event', 'btn', 'click', 'btn-close-about');
   });
   //work inner on/off
   $('.btn-discover').on('click', ()=>{
@@ -417,17 +424,25 @@ $(function() {
       viewArea='workinner';
       $('.sec_work_inner .inner').html( workInnerText[`work-${workIndex+1}`] );
       imgLoad('.sec_work_inner', workInnerIn);
+      ga('send', `page-Workinner-${workIndex+1}`);
 
       TweenMax.to('.sec_work', .3, { alpha:0 });
       if (window.innerWidth>768)
         TweenMax.set('#mask', {className: `+=show work-${workIndex+1}` });
     }
+    ga('send', 'event', 'btn', 'click', 'btn-discover');
   });
   $('.close-workinner').on('click', ()=>{
     viewArea = viewBack;
     animating = true;
     workInnerOut();
+    ga('send', 'event', 'btn', 'click', 'btn-close-workinner');
   });
+
+  $('body').on('click', 'a', function(){
+    ga('send', 'event', 'a', 'link-to', this.href );
+  });
+
 
 
 });
