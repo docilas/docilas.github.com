@@ -747,7 +747,7 @@ h2,h3,h4, .bold{
 
 				h3{
 					position: relative;
-					left: initial; top: initial;
+					// left: initial; top: initial;
 					font-size: 2rem;
 					line-height: 2.5rem;
 					padding: 0;
@@ -810,7 +810,7 @@ h2,h3,h4, .bold{
 
 		.info{
 			position: relative;
-			padding-bottom: 1rem;
+			padding: 1rem 0;
 			border-bottom: 1px solid #fff;
 			// font-weight: 700;
 			a{
@@ -841,29 +841,56 @@ h2,h3,h4, .bold{
 		p, li{
 			line-height: 1.5rem;
 		}
+		.screenshot{
+			position: relative;
+			width: 90%;
+			margin: 0 auto
+		}
 		.img_frame{
 			position: relative;
-			margin-top: 2rem;
-			margin-bottom: 8rem;
+			margin-top: 5rem;
+			margin-bottom: 14rem;
+			min-height: 500px;
+
+			@include desktop-m {
+				min-height: 350px;
+			}
 			@include mobile_l {
-				margin-bottom: 5rem;
+				min-height: 185px;
+				margin-bottom: 12rem;
+			}
+			@include mobile_m {
+				min-height: 170px;
+			}
+			@include mobile_s {
+				min-height: 145px;
+				margin-bottom: 10rem;
 			}
 
 			&:after{
+				@include translate(-50%, -37%);
 				content:'';
 				display: block;
 				position: absolute;
-				left: 0px; top: 0px;
-				width: 100%; height: 0;
-				padding-top: 69.52%;
+				left: 50%; top: 50%;
+				width: 110%; height: 0;
+				padding-top: 90%;
 				background: url(../images/monitor.svg) no-repeat;
 				background-size: 100% auto;
+				z-index: -1;
 			}
 
 		}
 		img{
+			position: absolute;
 			width: 100%;
+		}
 
+		.btn-back{
+			@include translateX(-50%);
+			position: absolute;
+			left: 50%; bottom: 20px;
+			padding: .5rem 1rem;
 		}
 	}
 
@@ -876,6 +903,97 @@ h2,h3,h4, .bold{
 
 }
 
+
+// slick
+.slick-slider {
+	@include user-select;
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+
+}
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+      outline: none;
+  }
+
+  &.dragging {
+      cursor: pointer;
+      cursor: hand;
+  }
+}
+.slick-slider .slick-track,
+.slick-slider .slick-list {
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block;
+
+  &:before,
+  &:after {
+      content: "";
+      display: table;
+  }
+
+  &:after {
+      clear: both;
+  }
+
+  .slick-loading & {
+      visibility: hidden;
+  }
+}
+.slick-slide {
+  float: left;
+  height: 100%;
+  min-height: 1px;
+  z-index: 10;
+  [dir="rtl"] & {
+      float: right;
+  }
+  img
+  {
+  	position: relative !important;
+    display: block;
+  }
+  &.slick-loading img {
+      display: none;
+  }
+
+  display: none;
+
+  &.dragging img {
+      pointer-events: none;
+  }
+
+  .slick-initialized & {
+      display: block;
+  }
+
+  .slick-loading & {
+      visibility: hidden;
+  }
+
+  .slick-vertical & {
+      display: block;
+      height: auto;
+      border: 1px solid transparent;
+  }
+}
 
 
 

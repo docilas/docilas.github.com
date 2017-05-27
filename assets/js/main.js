@@ -195,8 +195,11 @@ $(function() {
     app.ticker.add(function(delta) {
       count += (isDesktop)?0.05:0.01;
       displacementSprite.rotation += 0.005;
-      displacementSprite.scale.x = 2 + Math.sin(count) * 0.2;
-      displacementSprite.scale.y = 2 + Math.cos(count) * 0.2;
+      if (window.innerWidth>768) {
+        displacementSprite.scale.x = 2 + Math.sin(count) * 0.2;
+        displacementSprite.scale.y = 2 + Math.cos(count) * 0.2;
+      }
+
 
       if (viewArea=='home') {
         text1.scale.x = 1 + Math.cos(count) * 0.003;
@@ -236,25 +239,21 @@ $(function() {
       workNow = $('.sec_work .work').eq(workIndex);
       workPrev = $('.sec_work .work').eq(workIndex-1);
     }
+
     TweenMax.to( '.work_list', .75, {y: -pageHeight* (workIndex + 1), ease: Circ.easeInOut, onComplete: aniEnd});
-
-    if (workIndex !== 0) {
-      if (isDesktop) {
-
-      }
-      if ( window.innerWidth > 768) {
-        TweenMax.fromTo( workPrev.find('.masthead'), .5, { z:10 }, { z: -20, ease: Circ.easeOut});
-        TweenMax.fromTo( workPrev.find('.info'), .5, { z:40 }, { z: -15, ease: Circ.easeOut});
-      }
-
-    }
     $('.work_num').attr('data-num', workIndex+1);
     workPrev.removeClass('active');
     workNow.addClass('active');
+
     if ( window.innerWidth > 768) {
+      if (workIndex !== 0) {
+        TweenMax.fromTo( workPrev.find('.masthead'), .5, { z:10 }, { z: -20, ease: Circ.easeOut});
+        TweenMax.fromTo( workPrev.find('.info'), .5, { z:40 }, { z: -15, ease: Circ.easeOut});
+      }
       TweenMax.fromTo( workNow.find('.masthead'), .6, { z:-20,  }, { z: 10, delay:.5, ease: Circ.easeOut});
       TweenMax.fromTo( workNow.find('.info'), .75, { z:-15}, { z: 40, delay:.6, ease: Circ.easeOut});
     }
+
 
     if (workIndex == -1) {
       // back to home
@@ -272,7 +271,7 @@ $(function() {
 
       if(workIndex == 0){
         // to work list
-        bg_z = (isDesktop)?-50: -10;
+        bg_z = (isDesktop)?-50: -30;
         TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
         TweenMax.set('.list_num', {className:'+=hide'});
       }
@@ -285,7 +284,14 @@ $(function() {
     animating = false;
   }
 
+  function setSldr(){
+    $('.img_frame').slick({
+      autoplay: true,
+      arrows: false
+    });
+  }
   function workInnerIn() {
+
     if (window.innerWidth > 768)
       TweenMax.fromTo('#mask .masthead', .5, { width:'83%', paddingTop:'37%' }, { width:'100%', paddingTop:'30%', ease:Circ.easeOut, onComplete: cont});
     else{
@@ -423,7 +429,9 @@ $(function() {
       viewBack = viewArea;
       viewArea='workinner';
       $('.sec_work_inner .inner').html( workInnerText[`work-${workIndex+1}`] );
+      setSldr();
       imgLoad('.sec_work_inner', workInnerIn);
+
       ga('send', `page-Workinner-${workIndex+1}`);
 
       TweenMax.to('.sec_work', .3, { alpha:0 });
@@ -437,6 +445,10 @@ $(function() {
     animating = true;
     workInnerOut();
     ga('send', 'event', 'btn', 'click', 'btn-close-workinner');
+  });
+
+  $('body').on('click', '.btn-back', function(){
+    $('html,body').animate({ scrollTop: 0 }, 500);
   });
 
   $('body').on('click', 'a', function(){
