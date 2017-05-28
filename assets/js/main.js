@@ -15,16 +15,13 @@ $(function() {
   let jsonLoad = false;
   let isDesktop;
 
-  getDevice();
-  function getDevice(){
-    if (device.mobile() || device.tablet()) {
-      isDesktop = false;
-    }
-    else{
-      isDesktop = true;
-    }
+  // detect device
+  if (device.mobile() || device.tablet()) {
+    isDesktop = false;
   }
-
+  else{
+    isDesktop = true;
+  }
 
   //json load
   $.ajax({
@@ -166,7 +163,7 @@ $(function() {
 
     $(tar).imagesLoaded( { background: true })
       .always( function( instance ) {
-        console.log('all images loaded');
+        // console.log('all images loaded');
         TweenMax.to('#loading', .5, { autoAlpha: 0, delay:.5, onComplete: ()=>{
           if ( typeof cont === 'function')
             cont();
@@ -181,7 +178,7 @@ $(function() {
       })
       .progress( function( instance, image ) {
         let result = image.isLoaded ? 'loaded' : 'broken';
-        console.log( 'image is ' + result + ' for ' + image.img.src );
+        // console.log( 'image is ' + result + ' for ' + image.img.src );
         imgLoaded++;
         TweenMax.to('#loading .progress', .3, {width: imgLoaded / imgTotal *100 +'%'});
       });
@@ -271,7 +268,7 @@ $(function() {
 
       if(workIndex == 0){
         // to work list
-        bg_z = (isDesktop)?-50: -30;
+        bg_z = -50;
         TweenMax.to('#bg canvas', .5, {z:bg_z, ease:Sine.easeOut});
         TweenMax.set('.list_num', {className:'+=hide'});
       }
@@ -287,6 +284,7 @@ $(function() {
   function setSldr(){
     $('.img_frame').slick({
       autoplay: true,
+      autoplaySpeed: 4000,
       arrows: false
     });
   }

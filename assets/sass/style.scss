@@ -27,6 +27,7 @@ h2,h3,h4, .bold{
 	display: none !important;
 }
 .btn{
+	@include user-select-none;
 	cursor: pointer;
 }
 .btn-close{
@@ -151,6 +152,7 @@ h2,h3,h4, .bold{
 	text-align: center;
 	z-index: 999;
 	a{
+		@include user-select-none;
 		display: block;
 		padding: 0 .7rem;
 		font-weight: 700;
@@ -632,9 +634,9 @@ h2,h3,h4, .bold{
 		}
 
 		.btn-discover{
-			@include translateX(-50%);
+			@include translate3d(-50%, -50%, 50px);
 			position: absolute;
-			left: 50%; top: 110%;
+			left: 50%; bottom: 0%;
 			padding: .5rem 1rem;
 			font-size: 1.25rem;
 			font-weight: 700;
@@ -642,6 +644,7 @@ h2,h3,h4, .bold{
 		}
 
 		.info{
+			@include user-select-none;
 			@include transform-style(preserve-3d);
 			position: absolute;
 			left: 0% ; top: 0%;
@@ -717,6 +720,7 @@ h2,h3,h4, .bold{
 			h3:after{
 				@include animation(glitch-color .5s ceaser($easeOutQuad) reverse both infinite);
 			}
+
 			@include tablet {
 				h3:before{
 					@include animation(glitch-color-s .5s ceaser($easeOutQuad) both infinite);
@@ -735,7 +739,8 @@ h2,h3,h4, .bold{
 			.btn-discover{
 				@include translateX(-50%);
 				position: relative;
-				left: 50%; top: 0%;
+				bottom: initial;
+				margin-top: 1rem;
 				margin-bottom: 2rem;
 				display: inline-block;
 			}
@@ -889,7 +894,7 @@ h2,h3,h4, .bold{
 		.btn-back{
 			@include translateX(-50%);
 			position: absolute;
-			left: 50%; bottom: 20px;
+			left: 50%; bottom: 3rem;
 			padding: .5rem 1rem;
 		}
 	}
@@ -906,7 +911,7 @@ h2,h3,h4, .bold{
 
 // slick
 .slick-slider {
-	@include user-select;
+	@include user-select-none;
   position: relative;
   display: block;
   box-sizing: border-box;
@@ -930,11 +935,7 @@ h2,h3,h4, .bold{
 }
 .slick-slider .slick-track,
 .slick-slider .slick-list {
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+	@include translate3d(0,0,0);
 }
 
 .slick-track {
