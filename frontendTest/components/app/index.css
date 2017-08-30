@@ -1,0 +1,142 @@
+@import '../navbar';
+@import '../button';
+@import '../sec_feature';
+@import '../sec_help';
+@import '../sec_pricing';
+@import '../sec_more';
+@import '../footer';
+
+
+html {
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: SFUIText;
+  /*font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;*/
+  line-height: 1;
+  color: #212b36;
+}
+
+/*::selection {
+  background-color: color(yellow alpha(50%));
+}
+*/
+
+section{
+  position: relative;
+  text-align: center;
+
+}
+h1, h2, h3, h4, ul, ol, p{
+  margin: 0; padding: 0;
+}
+li{
+  list-style: none;
+}
+a{
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+/* section common*/
+.svg_reuse{
+  display: none;
+}
+.title{
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+
+  font-size: 2.75rem;
+  line-height: 3.125rem;
+  font-weight: bold;
+  color: #212b36;
+
+  &.title-white{
+    letter-spacing: -1.1px;
+    color: #fff;
+  }
+}
+
+.link{
+  position: relative;
+  display: inline-block;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  letter-spacing: -0.4px;
+  text-align: center;
+  transition: .3s;
+
+  &:after{
+    content:'';
+    display: block;
+    position: absolute;
+    width: 100%; height: 1px;
+    bottom: -.5rem; left: 0;
+
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: .3s ease-in-out;
+  }
+
+  & .icon_arrow{
+    display: inline-block;
+    width: 22px; height: 22px;
+    line-height: 22px;
+    margin-left: 5px;
+    border-radius: 50%;
+    text-align: center;
+    & svg{
+      transform: translateY(-50%);
+    }
+  }
+
+  &.link-blue{
+    color: #5c6ac4;
+    &:after{ background-color: #5c6ac4; }
+    & .icon_arrow{
+      border: 1px solid #5c6ac4;
+    }
+
+  }
+  &.link-white{
+    color:#fff;
+    &:after{ background-color: #fff; }
+    & .icon_arrow{
+      border: 1px solid #fff;
+    }
+  }
+
+  &:hover:after{
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 768px) {
+  html, body{
+    font-size: 14px;
+  }
+}
+@media (max-width: 640px) {
+  html, body{
+    font-size: 12px;
+  }
+  .title{
+    font-size: 2.25rem;
+  }
+  .link{
+    font-size: 1.125rem;
+  }
+}
+
+
+
+

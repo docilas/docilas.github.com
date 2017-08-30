@@ -1,0 +1,49 @@
+:root {
+  --counter-focus-color: deeppink;
+}
+
+[data-component='counter'] {
+  display: inline-flex;
+  vertical-align: middle;
+  align-items: center;
+  border-radius: .2em;
+  padding: 1em 1.5em;
+  background-color: color(black alpha(8%));
+  & button {
+    margin: 0;
+    border: 1px solid;
+    border-radius: 50%;
+    padding: 0;
+    text-align: center;
+    font: inherit;
+    font-size: 180%;
+    -webkit-font-smoothing: inherit;
+    color: royalblue;
+    background: color(white alpha(0)); /* Fix buggy hover */
+    cursor: pointer;
+    transition: .25s;
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+    & svg {
+      display: block;
+      width: .85em;
+      height: .85em;
+      fill: currentColor;
+    }
+    &:hover,
+    &:focus {
+      border-color: var(--counter-focus-color); /* Fixes Safari */
+      color: var(--counter-focus-color);
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+  & output {
+    margin-left: .5em;
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 180%;
+  }
+}
