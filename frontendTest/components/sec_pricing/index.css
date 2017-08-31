@@ -1,5 +1,5 @@
 #pricing{
-	padding: 6.25rem 0;
+	padding-bottom: 6.25rem;
 
 	& .title{
 		max-width: 790px;
@@ -12,19 +12,26 @@
 		margin-top: 2.5rem;
 		max-width: 600px;
 	}
+	& .wrapper{
+		overflow-x: hidden;
+		padding-bottom: 3rem;
+	}
 	& .flex_box{
 		display: flex;
 		justify-content: center;
 		margin-top: 7.5rem;
 	}
 	& .plan{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		width: 350px;
 		box-shadow: 0 .3rem 2.2rem .3rem rgba(67,110,161,.3);
 		margin: 0 48px;
 		padding-bottom: 25px;
 		text-align: center;
 		flex: 0 0 auto;
-		transition: .3s;
+		transition: color .3s, background .3s;
 
 		& .name{
 			font-size: 1.5rem;
@@ -51,9 +58,11 @@
 				font-weight: normal;
 			}
 		}
+		&. feature_list{
+
+		}
 		& .feature{
 			text-align: left;
-			margin-left: 80px;
 			margin-bottom: 1rem;
 			display: flex;
 			align-items: center;
@@ -80,7 +89,7 @@
 			background-color: #230051;
 			color:#fff;
 
-			transform: scale(1.03);
+			/*transform: scale(1.03);*/
 		}
 	}
 }
@@ -91,15 +100,11 @@
 		}
 	}
 }
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
 	#pricing{
 		& .plan{
 			width: 30%;
 			margin: 0 1.5%;
-
-			& .feature{
-				margin-left: 55px;
-			}
 		}
 	}
 }
@@ -108,26 +113,28 @@
 	#pricing{
 		& .wrapper{
 			padding: 35px 0px;
+			overflow-x: hidden;
+			cursor: -moz-grab;
+	    cursor: -webkit-grab;
+	    cursor: grab;
 
-			overflow-x: auto;
+	    &.grabbing{
+	    	cursor: -moz-grabbing;
+		    cursor: -webkit-grabbing;
+		    cursor: grabbing;
+	    }
 		}
 		& .flex_box{
-			display: block;
 			margin-top: 3.5rem;
-			width: 100vw;
-			white-space: nowrap;
+			justify-content: flex-start;
 		}
 		& .plan{
-			display: inline-block;
+			display: inline-flex;
 			width: 60%;
 			margin: 0 5%;
 
 			&:first-child{ margin-left: 20%; }
 			&:last-child{ margin-right: 20%; }
-
-			& .feature{
-				margin-left: 145px;
-			}
 		}
 	}
 }
@@ -154,20 +161,11 @@
 			}
 
 			& .feature{
-				margin-left: 55px;
-
 				& p{
 					font-size: 1rem;
 					line-height: 1rem;
 				}
 			}
-		}
-	}
-}
-@media (max-width: 320px) {
-	#pricing{
-		& .plan .feature{
-			margin-left: 40px;
 		}
 	}
 }

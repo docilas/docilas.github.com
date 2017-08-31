@@ -11,11 +11,8 @@ export function menuSwitch( event ) {
 
 export function menuScroll( event ) {
   menuSwitch();
-  // event.preventDefault();
-
-  // const full_url = this.href
-  // const parts = full_url.split("#")
-  // const trgt = parts[1]
-  // const target_top = document.querySelector(`#${trgt}`).offsetTop
-
+  // try to add smooth scroll event
+}
+export function outMenuClick( event ) {
+  menuSwitch();
 }

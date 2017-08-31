@@ -8,6 +8,7 @@
   margin: 0 auto;
   cursor: pointer;
 	transition: .3s;
+	z-index: 1;
 
   &.btn-white{
 		width: 100px;
@@ -17,7 +18,7 @@
 	  border-radius: 100px;
 	  border: solid 1.5px #ffffff;
 		overflow: hidden;
-		/*transition: .3s .15s;*/
+
 		&:after{
 			content:'';
 			display: block;
@@ -29,8 +30,6 @@
 			transition: .3s;
 		}
 		&:hover {
-			/*border-color: #606fc7;*/
-			/*color: #606fc7;*/
 			&:after{
 				transform: translateY(-100%);
 			}
@@ -48,6 +47,7 @@
 		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 		overflow: hidden;
 
+
 		&:before{
 			content: '';
 			position: absolute;
@@ -57,7 +57,7 @@
 			height: 100%;
 			background: linear-gradient(135deg, #606fc7 20%, #230051 100%);
 
-			z-index: 1;
+			z-index: 0;
 			transform: scale(3);
 			opacity: 0;
 			transition: .3s;

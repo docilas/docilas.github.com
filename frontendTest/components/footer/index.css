@@ -28,10 +28,11 @@ footer{
 		color: #fff;
 		margin-right: 40px;
 		cursor: pointer;
-
+		text-shadow: 0 3px 6px rgba(255,255,255,0);
 		&:hover{
-			transform: translateX(0);
-			opacity: .75;
+			text-shadow: 0 3px 6px rgba(255,255,255,.5);
+			transform: translateY(-3px);
+
 		}
 	}
 
@@ -56,19 +57,23 @@ footer{
 
 @media (max-width: 768px) {
 	footer{
+		height: 150px;
 		& .flex_box{
 			flex-direction: column;
 			justify-content: center;
 		}
 		& .icon-up{
 			order: 0;
+			& svg{
+				transform: translateY(0%);
+			}
 		}
 		& .link{
 			display: none;
 		}
-		& .copyright, & .author{
-		  margin: 0px auto;
-		  margin-top: 10px;
+		& .icon-up, & .author, & .copyright{
+		  margin: .625rem auto;
+		  /*margin-top: 1.25rem;*/
 		}
 
 

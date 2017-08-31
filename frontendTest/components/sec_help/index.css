@@ -1,8 +1,26 @@
 #help{
-	/* need top and bottom mask bg*/
-	padding: 7.5rem 0;
+	padding-top: 10rem;
+	padding-bottom: 15rem;
 	background-color: #f3f4fa;
+	overflow: hidden;
 
+	& .mask_top, & .mask_bottom{
+		position: absolute;
+		left: 50%;
+		width: 100%;
+		transform: translateX(-50%);
+
+	}
+	& .mask_top{
+		top: 0;
+	}
+	& .mask_bottom{
+		bottom: 0;
+	}
+	& .wrapper{
+		position: relative;
+		z-index: 10;
+	}
 	& .desc{
 		max-width: 640px;
 		font-size: 1.25rem;
@@ -14,10 +32,6 @@
 	}
 	& .link{
 		margin-top: 2.5rem;
-
-		& .icon_arrow{
-			transform: rotate(-90deg);
-		}
 	}
 
 	& .flex_box{
@@ -70,10 +84,20 @@
 }
 @media (max-width: 768px) {
 	#help{
+		padding-bottom: 18rem;
+
+		& .mask_top, & .mask_bottom{
+			width: 200%;
+		}
+
+		& .link{
+			margin-top: 1.5rem;
+		}
 		& .flex_box{
 			display: flex;
 			flex-direction: column;
-			padding: 40px 0;
+			padding-top: 3rem;
+			padding-bottom: 1rem;
 
 			&.flex-reverse{
 				flex-direction: column;
@@ -87,6 +111,7 @@
 
 		& .text_block{
 			text-align: center;
+			margin-bottom: 0rem;
 		}
 	}
 
@@ -94,6 +119,9 @@
 
 @media (max-width: 640px) {
 	#help{
+		padding-top: 5rem;
+		padding-bottom: 12rem;
+
 		& .subtit{
 			text-align: center;
 		}

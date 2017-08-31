@@ -16,6 +16,7 @@
     "dom4": "^1.8.3",
     "domready": "^1.0.8",
     "file-loader": "^0.11.2",
+    "hammerjs": "^2.0.8",
     "svgxuse": "^1.1.23",
     "whatwg-fetch": "^2.0.1"
   },

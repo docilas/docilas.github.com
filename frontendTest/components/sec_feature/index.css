@@ -2,7 +2,7 @@
 	background: url(../../content/background.jpg) top center no-repeat;
 	background-size: 1920px auto;
 	padding-top: 190px;
-	padding-bottom: 120px;
+	padding-bottom: 5rem;
 
 	& p{
 		text-align: center;
@@ -50,9 +50,7 @@
 		  margin-top: 100px;
 		  color: #212b36;
 		}
-		& .icon_arrow{
-			transform: rotate(-90deg);
-		}
+
 	}
 
 	& .feature_bottom{
@@ -69,7 +67,7 @@
 		}
 
 		& .feature_item{
-			margin: 30px 34px;
+			margin: 30px 30px;
 			width: 265px;
 
 			& .svg_icon{
@@ -105,6 +103,18 @@
 
 	}
 }
+@media (max-width: 1366px) {
+	#feature .feature_bottom .feature_item{
+		margin: 30px 20px;
+		width: 240px;
+	}
+}
+@media (max-width: 1200px) {
+	#feature .feature_bottom .feature_item {
+    margin: 20px 15px;
+    width: 200px;
+	}
+}
 @media (max-width: 768px) {
 	#feature{
 		& .feature_bottom{
@@ -119,7 +129,8 @@
 	#feature{
 		background-size: 350% auto;
 		padding-top: 10rem;
-		padding-bottom: 8rem;
+		padding-bottom: 5rem;
+
 		& .feature_top{
 			& .subtit{
 				font-size: 1.4rem;
