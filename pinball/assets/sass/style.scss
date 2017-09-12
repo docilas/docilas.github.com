@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@import "compass/reset", "compass/css3";
+@import "variable", "mixin";
+
+body{
+	// height: 100vh;
+	// overflow: hidden;
+	font-family: Helvetica, "微軟正黑體";
+	color: #2E2B44;
+}
+.tip{
+	position: fixed;
+	left: 0; top: 0;
+	padding: 1rem 2rem;
+	background-color: rgba(#000,.5);
+	color: #fff;
+}
+.wrap{
+	margin: 0px auto;
+	font-size: 0;
+}
+.ans{
+	@include flex-box;
+	@include flex-center;
+
+	width: 810px; height: 190px;
+	position: absolute;
+	left: 10px; top: 1000px;
+	font-size: 20px;
+	font-weight: bold;
+
+
+	.block{
+		@include flex-box;
+		@include flex-center;
+		@include flex(1);
+		writing-mode: vertical-rl;
+		margin: 0px 3px;
+	}
+	p{
+		@include text-shadow( 0px 0px 3px rgba(#2E2B44, .75));
+	}
+}
+

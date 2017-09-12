@@ -1,0 +1,76 @@
+
+@mixin font-xs{
+	font-size: .75rem;
+	line-height: 1.125rem;
+}
+@mixin font-s{
+	font-size: .875rem;
+	line-height: 1.5rem;
+
+	@media (max-width: 375px) {
+    line-height: 1.2rem;
+  }
+}
+
+@mixin font-m{
+	font-size: 1rem;
+	line-height: 1.5rem;
+}
+@mixin font-title($size){
+	font-size: #{$size}rem;
+	line-height: #{$size*1.5}rem;
+}
+
+@mixin flex-box{
+	display: -ms-flexbox;
+	@include display-flex;
+}
+@mixin flex-center{
+	-ms-flex-align: center;
+	-ms-flex-pack: center;
+	@include justify-content(center);
+	@include align-items(center);
+}
+
+@mixin bg_img($img){
+	background: image-url( #{$img} ) center no-repeat;
+	background-size: 100% auto;
+	width: image-width( #{$img} );
+	height: image-height( #{$img} );
+
+}
+@mixin bg_img_m($img){
+	background: image-url( #{$img} ) center no-repeat;
+	background-size: 100% auto;
+	width: image-width(#{$img})/2;
+	height: image-height(#{$img})/2;
+}
+
+
+//medai query
+@mixin desktop_m {
+  @media (max-width: 1366px) {
+    @content;
+  }
+}
+@mixin desktop_s {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin mobile_l {
+  @media (max-width: 425px){
+    @content;
+  }
+}
+@mixin mobile_m {
+  @media (max-width: 375px) {
+    @content;
+  }
+}
