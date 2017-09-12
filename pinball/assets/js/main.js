@@ -319,7 +319,7 @@ $(function(){
     TweenMax.set(".ans", { x: -(ball.position.x - viewportCentre.x) , y: -(ball.position.y - viewportCentre.y) });
   });
 
-  $('canvas').on('click', launcher);
+  $('body').on('click', launcher);
 
 
   window.addEventListener('keydown', (e)=>{
