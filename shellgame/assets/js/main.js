@@ -53,7 +53,7 @@ loader.load((loader, resources) => {
   btnStart.position= {x: app.renderer.width/2, y: app.renderer.height/2};
   btnStart.buttonMode = true;
   btnStart.interactive = true;
-  btnStart.on('click', startGame);
+  btnStart.on('pointerdown', startGame);
 
   //coin
   coin = new PIXI.Sprite.fromImage(coins[0]);
@@ -76,8 +76,8 @@ loader.load((loader, resources) => {
     hats[i].interactive = false;
     hats[i].name = `hat${i+1}`;
     hats[i].on('pointerdown', chooseHat);
-    hats[i].on('pointerover', onMover);
-    hats[i].on('pointerout', onMout);
+    hats[i].on('mouseover', onMover);
+    hats[i].on('mouseout', onMout);
   }
   function onMover(e) {
     if (user_control)
