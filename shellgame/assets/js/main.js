@@ -28,7 +28,7 @@ loader.load((loader, resources) => {
 
   // text
   const style = new PIXI.TextStyle({
-    fontFamily: 'Comic Sans MS',
+    fontFamily: 'Comic Sans MS, Verdana',
     fontSize: 100,
     fontWeight: 'bold',
     fill: '#fff',
