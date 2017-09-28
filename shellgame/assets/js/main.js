@@ -15,6 +15,7 @@ let btnStart, hat1, hat2, hat3, coin, result, tips;
 const app = new PIXI.Application(1200, 900,);
 document.getElementById('canvas').appendChild(app.view);
 
+
 //image loader
 const loader = new PIXI.loaders.Loader();
 loader.add(imgs)
@@ -89,8 +90,6 @@ loader.load((loader, resources) => {
   }
 
   app.stage.addChild(bg, coin, ...hats, result, tips, btnStart);
-
-
   hat_obj = {
     'hat1': hat1,
     'hat2': hat2,
@@ -106,19 +105,20 @@ function switchUserControl(state){
   hat3.interactive = state;
 }
 function startGame(){
+  //reset shuffle times
   swap_times = 10;
+
   TweenMax.to( btnStart, .5, { alpha: 0});
   TweenMax.set( btnStart, { y: -100, delay: .5});
   TweenMax.to( [hat1, hat2, hat3], .75, { y: 760, delay: .75, onComplete: swapHat});
 }
 function swapHat(){
-  user_control = false;
+  switchUserControl(false);
   coin.visible = false;
+
   if (swap_times>0) {
-    // console.log(swap_times)
-
+    //shuffle one time
     next_sq = shuffle(now_sq);
-
     TweenMax.to( hat_obj[now_sq[0]], .5, { x: hat_obj[next_sq[0]].x});
     TweenMax.to( hat_obj[now_sq[1]], .5, { x: hat_obj[next_sq[1]].x});
     TweenMax.to( hat_obj[now_sq[2]], .5, { x: hat_obj[next_sq[2]].x, onComplete: swapHat});
@@ -127,6 +127,7 @@ function swapHat(){
     swap_times--;
   }
   else{
+    //finish shuffle
     TweenMax.set( coin, { x: hat2.x });
     TweenMax.to( tips, .5, { y: 150 });
     switchUserControl(true);
@@ -157,6 +158,7 @@ function chooseHat(e) {
   switchUserControl(false);
   TweenMax.set( tips, { y: -100 });
   TweenMax.set([hat1.scale, hat2.scale, hat3.scale], {x:.5, y:.5});
+  // Right or Wrong
   if ((this.name == 'hat2')) {
     const randomCoins = Math.floor( Math.random()*(coins.length -1) +1)
     coin.texture = PIXI.Texture.fromImage( coins[randomCoins] );
@@ -176,7 +178,6 @@ function chooseHat(e) {
   TweenMax.set( btnStart, { y: app.renderer.height/2, delay: 2});
   TweenMax.to( btnStart, .5, { alpha: 1, delay: 2});
   TweenMax.set( result, { y: -100, delay: 2});
-
 }
 
 
